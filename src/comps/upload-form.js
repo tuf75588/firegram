@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function UploadForm() {
   function handleFileUpload(event) {
@@ -10,8 +10,10 @@ function UploadForm() {
       // if they hit cancel
       setFile(null);
       setError('Please select an image file (png or jpg)');
+    } else {
+      setFile(input);
+      setError(null);
     }
-    setFile(input);
   }
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
@@ -24,6 +26,7 @@ function UploadForm() {
       <input type="file" onChange={handleFileUpload} />
       <div className="output">
         {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
+        {file && <p>the file you chose was {file.name} </p>}
       </div>
     </form>
   );
