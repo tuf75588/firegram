@@ -1,11 +1,16 @@
 import React from 'react';
-import { storage as projectStorage } from '../firebase/config';
+import {
+  storage as projectStorage,
+  firestore as projectFirestore,
+  serverTimestamp,
+} from '../firebase/config';
 
 // this hook will handle file uploads and return metainfo about our upload.
 function useStorage(file) {
   React.useEffect(() => {
     // this callback needs to be synced with the file parameter
     const storageRef = projectStorage.ref(file.name);
+    const collectionRef = projectFirestore.collection('images');
     storageRef.put(file).on(
       'state_changed',
       (snapshot) => {
@@ -19,6 +24,7 @@ function useStorage(file) {
       async () => {
         // mark as complete at this point.
         const url = await storageRef.getDownloadURL();
+        await collectionRef.add({ url, createdAt: serverTimestamp() });
         setUrl(url);
       }
     );
