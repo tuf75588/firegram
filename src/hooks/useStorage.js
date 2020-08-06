@@ -6,8 +6,8 @@ function useStorage(file) {
   React.useEffect(() => {
     // this callback needs to be synced with the file parameter
     const storageRef = projectStorage.ref(file.name);
-    storageRef.put(storageRef).on(
-      'state_change',
+    storageRef.put(file).on(
+      'state_changed',
       (snapshot) => {
         const percentage =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;

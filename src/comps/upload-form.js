@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ProgressBar from './progressBar';
 
 function UploadForm() {
   function handleFileUpload(event) {
@@ -18,15 +19,15 @@ function UploadForm() {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
-      <input type="file" onChange={handleFileUpload} />
+    <form>
+      <label>
+        <input type="file" onChange={handleFileUpload} />
+        <span>+</span>
+      </label>
       <div className="output">
         {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
         {file && <p>the file you chose was {file.name} </p>}
+        {file && <ProgressBar file={file} setFile={setFile} />}
       </div>
     </form>
   );
