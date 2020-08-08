@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { firestore as projectFirestore } from '../firebase/config';
 function useFirestore(collection) {
   useEffect(() => {
@@ -10,7 +10,7 @@ function useFirestore(collection) {
         // callback fires once initially, and on collection changes
         let documents = [];
         snap.forEach((doc) => {
-          documents.push({ ...doc.data(), id: doc.id() });
+          documents.push({ ...doc.data(), id: doc.id });
         });
         setDocs(documents);
       });
